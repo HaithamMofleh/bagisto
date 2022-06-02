@@ -286,7 +286,7 @@ abstract class DataGrid
         $this->checkPermissions($action, $specialPermission, function ($action, $eventName) {
             $this->fireEvent('action.before.' . $eventName);
 
-            $action['key'] = Str::slug($action['title'], '_');
+            $action['key'] = Str::slug($action['title'], '_', app()->getLocale());
 
             $this->actions[] = $action;
             $this->enableAction = true;
@@ -439,5 +439,26 @@ abstract class DataGrid
         }
 
         return $necessaryExtraFilters;
+    }
+
+    /**
+     * Get column details by name. You can minimize the details by
+     * setting the key also.
+     *
+     * @param  string  $columnName
+     * @param  string  $key
+     * @return array
+     */
+    protected function getColumnByName($columnName, $key = null)
+    {
+        $column = collect($this->columns)
+            ->filter(fn($column) => $column['index'] === $columnName)
+            ->first();
+
+        if ($key && isset($column[$key])) {
+            return $column[$key];
+        }
+
+        return $column;
     }
 }

@@ -12,20 +12,6 @@ use Webkul\Product\Repositories\ProductRepository;
 class CartController extends Controller
 {
     /**
-     * Wishlist repository instance.
-     *
-     * @var \Webkul\Customer\Repositories\WishlistRepository
-     */
-    protected $wishlistRepository;
-
-    /**
-     * Product repository instance.
-     *
-     * @var \Webkul\Product\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Customer\Repositories\CartItemRepository  $wishlistRepository
@@ -33,16 +19,13 @@ class CartController extends Controller
      * @return void
      */
     public function __construct(
-        WishlistRepository $wishlistRepository,
-        ProductRepository $productRepository
-    ) {
+        protected WishlistRepository $wishlistRepository,
+        protected ProductRepository $productRepository
+    )
+    {
         $this->middleware('throttle:5,1')->only('applyCoupon');
 
         $this->middleware('customer')->only('moveToWishlist');
-
-        $this->wishlistRepository = $wishlistRepository;
-
-        $this->productRepository = $productRepository;
 
         parent::__construct();
     }
@@ -117,6 +100,22 @@ class CartController extends Controller
 
         if ($result) {
             session()->flash('success', trans('shop::app.checkout.cart.item.success-remove'));
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Removes the item from the cart if it exists.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function removeAllItems()
+    {
+        $result = Cart::removeAllItems();
+
+        if ($result) {
+            session()->flash('success', trans('shop::app.checkout.cart.item.success-all-remove'));
         }
 
         return redirect()->back();

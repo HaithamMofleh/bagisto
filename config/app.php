@@ -162,6 +162,11 @@ return [
      */
     'editor' => 'vscode',
 
+    /*
+     *Application Version
+     */
+    'version' => env('APP_VERSION', '1.x-dev'),
+
     /**
      * Blacklisting attributes while debugging
      */
@@ -275,7 +280,8 @@ return [
         Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,
         Webkul\DebugBar\Providers\DebugBarServiceProvider::class,
         Webkul\Marketing\Providers\MarketingServiceProvider::class,
-        Webkul\Notification\Providers\NotificationServiceProvider::class
+        Webkul\Notification\Providers\NotificationServiceProvider::class,
+        Webkul\Sitemap\Providers\SitemapServiceProvider::class
     ],
 
     /*

@@ -9,7 +9,7 @@ use Webkul\Product\Http\Controllers\ProductController;
 /**
  * Catalog routes.
  */
-Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => config('app.admin_url')], function () {
+Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_url')], function () {
     Route::prefix('catalog')->group(function () {
         /**
          * Sync route.
@@ -95,6 +95,8 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
         Route::put('/categories/edit/{id}', [CategoryController::class, 'update'])->defaults('_config', [
             'redirect' => 'admin.catalog.categories.index',
         ])->name('admin.catalog.categories.update');
+
+        Route::get('/categories/products/{id}', [CategoryController::class, 'products'])->name('admin.catalog.categories.products');
 
         Route::post('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('admin.catalog.categories.delete');
 

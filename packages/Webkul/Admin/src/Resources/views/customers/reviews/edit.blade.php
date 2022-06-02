@@ -31,7 +31,7 @@
 
                     <input name="_method" type="hidden" value="PUT">
 
-                    <accordian :title="'{{ __('admin::app.account.general') }}'" :active="true">
+                    <accordian title="{{ __('admin::app.account.general') }}" :active="true">
                         <div slot="body">
 
                             <div class="control-group">
@@ -67,7 +67,7 @@
 
                             <div class="control-group">
                                 <label for="name" >{{ __('admin::app.customers.reviews.comment') }}</label>
-                                <textarea  class="control" disabled> {{ $review->comment }}</textarea>
+                                <textarea  class="control" disabled v-text='"{{ $review->comment }}"'> </textarea>
                             </div>
 
                             @if (count($review->images) > 0)

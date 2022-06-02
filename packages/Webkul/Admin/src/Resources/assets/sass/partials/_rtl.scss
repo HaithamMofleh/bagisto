@@ -3,6 +3,9 @@
 
     .form-container {
         text-align: right !important;
+        .table {
+            overflow-y: auto;
+        }
     }
 
     .navbar-top {
@@ -198,6 +201,8 @@
 
     .control-group label .locale {
         float: left;
+        right: unset;
+        left: 30%;
     }
 
     .multiselect {

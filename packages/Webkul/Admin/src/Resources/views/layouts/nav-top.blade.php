@@ -6,10 +6,7 @@
         'completed'=> trans('admin::app.notification.order-status-messages.completed'),
         'processing' => trans('admin::app.notification.order-status-messages.processing')
     ];
-
     $allLocales = core()->getAllLocales()->pluck('name', 'code');
-
-    $currentLocaleCode = core()->getRequestedLocaleCode('admin_locale');
 @endphp
 
 <div class="navbar-top">
@@ -44,7 +41,7 @@
             </div>
 
             <notification
-                notif-title="{{ __('admin::app.notification.notification-title') }}"
+                notif-title="{{ __('admin::app.notification.notification-title', ['read' => 0]) }}"
                 get-notification-url="{{ route('admin.notification.get-notification') }}"
                 view-all="{{ route('admin.notification.index') }}"
                 order-view-url="{{ \URL::to('/') }}/admin/viewed-notifications/"
@@ -54,39 +51,32 @@
                 view-all-title="{{ __('admin::app.notification.view-all') }}"
                 get-read-all-url="{{ route('admin.notification.read-all') }}"
                 order-status-messages="{{ json_encode($orderStatusMessages) }}"
-                read-all-title="{{ __('admin::app.notification.read-all') }}">
-            </notification>
+                read-all-title="{{ __('admin::app.notification.read-all') }}"
+                locale-code={{ core()->getCurrentLocale()->code }}>
 
-            <div class="profile-info">
-
-                <div class="dropdown-toggle">
-
-                    <i class="icon locale-icon-bold"></i>
-                </div>
-
-                <div class="dropdown-list bottom-right">
-                    <div class="dropdown-container">
-                        <ul>
-                            @foreach ($allLocales as $code => $name)
-                                <li>
-                                    <a href="{{ url()->current() . '?' . http_build_query(array_merge(request()->all(), ['admin_locale' => $code])) }}"
-                                        style="{{ $code == $currentLocaleCode ? 'color:blue' : '' }}">
-                                        {{ $name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
+                <div class="notifications">
+                    <div class="dropdown-toggle">
+                        <i class="icon notification-icon active" style="margin-left: 0px;"></i>
                     </div>
                 </div>
-            </div>
+
+            </notification>
 
             <div class="profile-info">
                 <div class="dropdown-toggle">
                     <div style="display: inline-block; vertical-align: middle;">
                         <div class="profile-info-div">
-                            <div class="profile-info-icon">
-                                <span>{{ substr(auth()->guard('admin')->user()->name, 0, 1) }}</span>
-                            </div>
+                            @if (auth()->guard('admin')->user()->image)
+                                <div class="profile-info-icon">
+                                    <img src="{{ auth()->guard('admin')->user()->image_url }}"/>
+                                </div>
+                            @else
+                                <div class="profile-info-icon">
+                                    <span>{{ substr(auth()->guard('admin')->user()->name, 0, 1) }}</span>
+                                </div>
+                            @endif
+
+
                             <div class="profile-info-desc">
                                 <span class="name">
                                     {{ auth()->guard('admin')->user()->name }}
@@ -95,7 +85,7 @@
                                 <span class="role">
                                     {{ auth()->guard('admin')->user()->role['name'] }}
                                 </span>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                     <i class="icon arrow-down-icon active"></i>

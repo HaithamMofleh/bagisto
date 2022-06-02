@@ -12,7 +12,6 @@ use Webkul\Customer\Mail\RegistrationEmail;
 use Webkul\Customer\Mail\VerificationEmail;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Customer\Repositories\CustomerRepository;
-use Webkul\Sales\Models\Order;
 use Webkul\Shop\Mail\SubscriptionEmail;
 
 class RegistrationController extends Controller
@@ -25,27 +24,6 @@ class RegistrationController extends Controller
     protected $_config;
 
     /**
-     * Customer repository instance.
-     *
-     * @var \Webkul\Customer\Repositories\CustomerRepository
-     */
-    protected $customerRepository;
-
-    /**
-     * Customer group repository instance.
-     *
-     * @var \Webkul\Customer\Repositories\CustomerGroupRepository
-     */
-    protected $customerGroupRepository;
-
-    /**
-     * Subscribers list repository instance.
-     *
-     * @var \Webkul\Core\Repositories\SubscribersListRepository
-     */
-    protected $subscriptionRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Customer\Repositories\CustomerRepository  $customer
@@ -54,18 +32,12 @@ class RegistrationController extends Controller
      * @return void
      */
     public function __construct(
-        CustomerRepository $customerRepository,
-        CustomerGroupRepository $customerGroupRepository,
-        SubscribersListRepository $subscriptionRepository
+        protected CustomerRepository $customerRepository,
+        protected CustomerGroupRepository $customerGroupRepository,
+        protected SubscribersListRepository $subscriptionRepository
     )
     {
         $this->_config = request('_config');
-
-        $this->customerRepository = $customerRepository;
-
-        $this->customerGroupRepository = $customerGroupRepository;
-
-        $this->subscriptionRepository = $subscriptionRepository;
     }
 
     /**
@@ -89,11 +61,11 @@ class RegistrationController extends Controller
         $request->validated();
 
         $data = array_merge(request()->input(), [
-            'password'          => bcrypt(request()->input('password')),
-            'api_token'         => Str::random(80),
-            'is_verified'       => core()->getConfigData('customer.settings.email.verification') ? 0 : 1,
-            'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id,
-            'token'             => md5(uniqid(rand(), true)),
+            'password'                  => bcrypt(request()->input('password')),
+            'api_token'                 => Str::random(80),
+            'is_verified'               => core()->getConfigData('customer.settings.email.verification') ? 0 : 1,
+            'customer_group_id'         => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id,
+            'token'                     => md5(uniqid(rand(), true)),
             'subscribed_to_news_letter' => isset(request()->input()['is_subscribed']) ? 1 : 0,
         ]);
 
@@ -130,7 +102,7 @@ class RegistrationController extends Controller
                         'email' => $data['email'],
                         'token' => $token,
                     ]));
-                } catch (\Exception $e) { }
+                } catch (\Exception $e) {}
             }
         }
 
@@ -179,9 +151,9 @@ class RegistrationController extends Controller
         $customer = $this->customerRepository->findOneByField('token', $token);
 
         if ($customer) {
-            $customer->update(['is_verified' => 1, 'token' => 'NULL']);
+            $this->customerRepository->update(['is_verified' => 1, 'token' => 'NULL'], $customer->id);
 
-            Order::where('customer_email', $customer->email)->update(['customer_id' => $customer->id]);
+            $this->customerRepository->syncNewRegisteredCustomerInformations($customer);
 
             session()->flash('success', trans('shop::app.customer.signup-form.verified'));
         } else {

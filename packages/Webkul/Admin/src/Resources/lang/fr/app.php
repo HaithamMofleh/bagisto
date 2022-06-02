@@ -80,6 +80,7 @@ return [
         'campaigns'                => 'Campagnes',
         'email-templates'          => 'Modèles d\'e-mails',
         'events'                   => 'Événements',
+        'sitemaps'                 => 'Sitemaps',
         'discount'                 => 'Rabais',
         'cms'                      => 'CMS',
         'transactions'             => 'Transactions',
@@ -135,6 +136,7 @@ return [
         'campaigns'                => 'Campagnes',
         'subscribers'              => 'Abonnés à la newsletter',
         'events'                   => 'Événements',
+        'sitemaps'                 => 'Sitemaps',
         'newsletter-subscriptions' => 'Abonnement à la Newsletter',
     ],
 
@@ -257,18 +259,24 @@ return [
         'date'             => 'Date',
         'transaction-id'   => 'identifiant de transaction',
         'transaction-date' => 'Date de la transaction',
+        'file-name'        => 'File Name',
+        'path'             => 'Path',
+        'link-for-google'  => 'Link For Google',
     ],
 
     'account' => [
-        'title'            => 'Mon compte',
-        'save-btn-title'   => 'Sauvegarder',
-        'general'          => 'Général',
-        'name'             => 'Nom',
-        'email'            => 'E-mail',
-        'password'         => 'Mot de passe',
-        'confirm-password' => 'Confirmez le mot de passe',
-        'change-password'  => 'Changer le mot de passe du compte',
-        'current-password' => 'Mot de passe actuel',
+        'title'                => 'Mon compte',
+        'save-btn-title'       => 'Sauvegarder',
+        'general'              => 'Général',
+        'upload-image-info'    => 'Upload a Profile Image (100px x 100px) in PNG or JPG Format',
+        'remove-image'         => 'Remove Image',
+        'image-upload-message' => 'Only images (.jpeg, .jpg, .png, ..) are allowed.',
+        'name'                 => 'Nom',
+        'email'                => 'E-mail',
+        'password'             => 'Mot de passe',
+        'confirm-password'     => 'Confirmez le mot de passe',
+        'change-password'      => 'Changer le mot de passe du compte',
+        'current-password'     => 'Mot de passe actuel',
     ],
 
     'users' => [
@@ -280,6 +288,9 @@ return [
             'confirm-password' => 'Confirmez le mot de passe',
             'back-link-title'  => 'Retour à la connexion',
             'submit-btn-title' => 'Envoyer un e-mail de réinitialisation du mot de passe',
+            'passwords'        => [
+                'throttled'        => 'Avertissement : Vous avez récemment demandé la réinitialisation de votre mot de passe, veuillez vérifier votre messagerie.',
+            ]
         ],
 
         'reset-password' => [
@@ -513,6 +524,7 @@ return [
                 'invoice-missing'   => 'Cet identifiant de facture n\'existe pas',
                 'transaction-saved' => 'La transaction a été enregistrée',
                 'already-paid'      => 'Cette facture a déjà été payée',
+                'transaction-amount-exceeds' => 'The specified amount of this transaction exceeds the total amount of the invoice.',
             ],
         ],
     ],
@@ -532,10 +544,10 @@ return [
                 'bundle'                        => 'empaqueter',
                 'downloadable'                  => 'téléchargeable',
                 'grouped'                       => 'groupé',
-                'virtual'                       => 'virtuelle',            
+                'virtual'                       => 'virtuelle',
                 'configurable'                  => 'configurable',
 
-            ], 
+            ],
             'simple'                        => 'Simple',
             'configurable'                  => 'Configurable',
             'familiy'                       => 'Famille d\'attributs',
@@ -610,6 +622,11 @@ return [
             'save'                          => 'Save',
             'cancel'                        => 'Cancel',
             'saved-inventory-message'       => 'Product inventory saved successfully.',
+            'validations'                   => [
+                'quantity-required' => 'Quantity is required.',
+                'quantity-integer'  => 'Quantity should be integer.',
+                'quantity-min-zero' => 'Quantity should be greater then zero.',
+            ],
         ],
 
         'attributes' => [
@@ -622,6 +639,7 @@ return [
             'type'                        => 'Type d\'attribut',
             'text'                        => 'Texte',
             'textarea'                    => 'Zone de texte',
+            'enable-wysiwyg'              => 'Enable Wysiwyg Editor',
             'price'                       => 'Prix',
             'boolean'                     => 'booléen',
             'select'                      => 'Sélectionner',
@@ -680,6 +698,8 @@ return [
             'name'                 => 'Nom',
             'groups'               => 'Groupes',
             'add-group-title'      => 'Ajouter un groupe',
+            'edit-group-title'     => 'Edit Group',
+            'update-group-title'   => 'Update Group',
             'position'             => 'Positionner',
             'attribute-code'       => 'Code',
             'type'                 => 'Taper',
@@ -707,6 +727,7 @@ return [
             'description'              => 'La description',
             'parent-category'          => 'Catégorie Parentale',
             'seo'                      => 'optimisation du moteur de recherche',
+            'products'                 => 'Des produits',
             'slug'                     => 'Limace',
             'meta_title'               => 'Titre du méta',
             'meta_description'         => 'Meta Description',
@@ -1284,6 +1305,21 @@ return [
             'delete-success' => 'Événement supprimé avec succès.',
             'edit-error'     => 'Impossible de modifier cet événement.',
         ],
+
+        'sitemaps' => [
+            'title'          => 'Sitemaps',
+            'add-title'      => 'Add Sitemap',
+            'edit-title'     => 'Edit Sitemap',
+            'save-btn-title' => 'Save',
+            'general'        => 'General',
+            'file-name'      => 'File Name',
+            'file-name-info' => 'Example: sitemap.xml',
+            'path'           => 'Path',
+            'path-info'      => 'Example: "/sitemap/" or "/" for base path',
+            'create-success' => 'Sitemap created successfully.',
+            'update-success' => 'Sitemap updated successfully.',
+            'delete-success' => 'Sitemap deleted successfully.',
+        ]
     ],
 
     'error' => [

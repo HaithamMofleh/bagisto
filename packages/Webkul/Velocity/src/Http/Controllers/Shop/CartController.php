@@ -14,7 +14,7 @@ class CartController extends Controller
      * Retrives the mini cart details
      *
      * @return \Illuminate\Http\Response
-    */
+     */
     public function getMiniCartDetails()
     {
         $cart = cart()->getCart();
@@ -59,7 +59,7 @@ class CartController extends Controller
      * Function for guests user to add the product in the cart.
      *
      * @return array
-    */
+     */
     public function addProductToCart()
     {
         try {
@@ -123,12 +123,10 @@ class CartController extends Controller
      *
      * @param  int  $itemId
      * @return \Illuminate\Http\Response
-    */
+     */
     public function removeProductFromCart($itemId)
     {
         $result = Cart::removeItem($itemId);
-
-        session()->forget('cart');
 
         if ($result) {
             $response = [
@@ -143,5 +141,21 @@ class CartController extends Controller
             'label'   => trans('velocity::app.shop.general.alert.error'),
             'message' => trans('velocity::app.error.something_went_wrong'),
         ]);
+    }
+
+    /**
+     * Removes the item from the cart if it exists.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function removeAllItems()
+    {
+        $result = Cart::removeAllItems();
+
+        if ($result) {
+            session()->flash('success', trans('shop::app.checkout.cart.item.success-all-remove'));
+        }
+
+        return redirect()->back();
     }
 }

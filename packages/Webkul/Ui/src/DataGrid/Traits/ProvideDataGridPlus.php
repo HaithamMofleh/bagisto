@@ -91,7 +91,7 @@ trait ProvideDataGridPlus
 
         /* handling cases for new locale if not present in current channel */
         if ($channel !== 'all') {
-            $channelLocales = app('Webkul\Core\Repositories\ChannelRepository')->findOneByField('code', $channel)->locales;
+            $channelLocales = app('Webkul\Core\Repositories\ChannelRepository')->findOneByField('code', $channel)->locales()->orderBy('name')->get();
 
             if ($channelLocales->contains('code', $locale)) {
                 $locales = $channelLocales;
@@ -144,6 +144,7 @@ trait ProvideDataGridPlus
             'value'               => __('ui::app.datagrid.value'),
             'valueHere'           => __('ui::app.datagrid.value-here'),
             'numericValueHere'    => __('ui::app.datagrid.numeric-value-here'),
+            'select'              => __('ui::form.select-attribute', ['attribute' => '']),
             'apply'               => __('ui::app.datagrid.apply'),
             'submit'              => __('ui::app.datagrid.submit'),
             'actions'             => __('ui::app.datagrid.actions'),

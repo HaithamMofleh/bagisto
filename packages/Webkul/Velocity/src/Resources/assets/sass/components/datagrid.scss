@@ -1,25 +1,6 @@
 @import '../main/mixins';
 @import '../main/_variables';
 
-.dropdown-toggle {
-    position: relative;
-}
-
-.dropdown-toggle::after {
-    position: absolute;
-    right: 10px;
-    top: 16px;
-}
-
-.rtl {
-    .dropdown-toggle::after {
-        position: absolute;
-        left: 22px;
-        top: 16px;
-        right: unset;
-    }
-}
-
 .table {
     width: 100%;
 
@@ -52,6 +33,15 @@
             padding: 12px 10px;
             background: #f8f9fa;
             color: $font-color;
+            border-right: 1px solid #ccc !important;
+
+            &.sortable {
+                cursor: pointer;
+            }
+
+            &:last-child {
+                border-right: none;
+            }
         }
 
         tbody td {
@@ -145,6 +135,7 @@
         grid-template-columns: auto auto;
         column-gap: 10px;
         align-items: end;
+        position: relative;
 
         .filter-right {
             justify-self: end;
@@ -154,8 +145,25 @@
             align-items: end;
 
             .control-group {
+                margin-bottom: 10px;
+
                 .control {
                     margin-bottom: 0px;
+                }
+            }
+
+            .dropdown-list {
+                right: 0;
+                padding: 15px;
+
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                }
+
+                .apply-filter {
+                    width: 100%;
                 }
             }
         }
@@ -173,6 +181,7 @@
     border-radius: 3px;
     height: 36px;
     max-width: 300px;
+    position: relative;
 
     .control {
         font-size: 15px;
@@ -202,10 +211,21 @@
         height: 36px;
         width: 36px;
         padding: 5px;
-        float: right;
-        display: none;
+        right: 0px;
+        top: 0px;
+        position: absolute;
     }
 }
+
+.search-icon {
+    background-image: url(../images/icon-search.svg);
+    width: 24px;
+    height: 24px;
+  }
+  .icon {
+    display: inline-block;
+    background-size: cover;
+  }
 
 .grid-dropdown-header {
     display: inline-flex;
@@ -224,41 +244,133 @@
     }
 }
 
+.dropdown-toggle::after {
+    display: none;
+}
+
 .dropdown-list {
+    width: 200px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 16%), 0 0 9px 0 rgb(0 0 0 / 16%);
-    border-radius: 3px;
-    background-color: #ffffff;
+
+    @include box-shadow(
+        0 2px 4px 0 rgba(0, 0, 0, 0.16),
+        0 0 9px 0 rgba(68, 58, 58, 0.16)
+    );
+
+    @include border-radius(3px);
+
+    background-color: $white-color;
     position: absolute;
     display: none;
-    z-index: 10;
+    z-index: 1000;
     text-align: left;
 
-    &.dropdown-container {
-        padding: 15px;
+    &.bottom-left {
+        top: 42px;
+        left: 0px;
+    }
+
+    &.bottom-right {
+        top: 42px;
+        right: 0px;
+    }
+
+    &.top-left {
+        bottom: 0px;
+        left: 42px;
+    }
+
+    &.top-right {
+        bottom: 0px;
+        right: 42px;
+    }
+
+    .dropdown-label {
+        padding: 8px 12px;
+        display: block;
+        cursor: default;
+        color: rgba(0, 0, 0, 0.53);
+        font-size: 18px;
+        font-weight: 600;
+        border-bottom: 1px solid #c1c2c3;
+    }
+
+    .dropdown-container {
+        overflow-y: auto;
+
+        label {
+            font-size: 15px;
+            display: inline-block;
+            text-transform: uppercase;
+            color: #9e9e9e;
+            font-weight: 700;
+            padding-bottom: 5px;
+        }
 
         ul {
-            list-style: none;
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
 
             li {
-                list-style: none !important;
+                a {
+                    padding: 8px 12px;
+                    font-size: 16px;
 
-                .control-group {
-                    margin-bottom: 15px;
-                    display: block;
-
-                    .control {
-                        margin-bottom: 15px;
+                    &:link,
+                    &:active,
+                    &:visited,
+                    &:focus {
+                        color: $font-color;
+                        display: block;
                     }
+
+                    &:hover {
+                        background-color: $border-light;
+                    }
+                }
+
+                .control-group label {
+                    color: $font-color;
+                    font-size: 15px;
+                    font-weight: 500;
+                    text-transform: capitalize;
+                    width: 100%;
                 }
             }
         }
 
-        .apply-filter {
-            padding: 10px;
+        .btn {
             width: 100%;
+            margin-top: 10px;
         }
     }
+}
+
+.checkbox-dropdown-list {
+    width: 170px !important;
+    right: 14px !important;
+
+    input {
+        width: unset !important;
+    }
+}
+
+.dropdown-btn {
+    min-width: 150px;
+    text-align: left;
+    background: #fff;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    font-size: 14px;
+    padding: 8px 35px 8px 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdown-btn:focus {
+    border-color: #26a37c !important;
+    outline: unset !important;
 }
 
 .filter-advance {
@@ -288,6 +400,7 @@
         height: 40px;
         color: #000311;
         letter-spacing: -0.22px;
+
         @include border-radius(24px);
 
         .icon.cross-icon {
@@ -303,6 +416,10 @@
 }
 
 .rtl {
+    .grid-container .datagrid-filters .filter-right .dropdown-list {
+        right: unset;
+    }
+
     .search-filter {
         .control {
             padding-right: 10px;
@@ -342,6 +459,20 @@
             .cross-icon {
                 margin-right: 10px;
                 margin-left: 0;
+            }
+        }
+    }
+
+    .checkbox-dropdown-list {
+        .dropdown-container {
+            text-align: right;
+        }
+
+        .checkbox {
+            input[type='checkbox'] {
+                float: right;
+                margin-right: unset;
+                margin-left: unset;
             }
         }
     }

@@ -8,10 +8,6 @@
         @extend .fs16;
 
         > div {
-            @extend .mb20;
-
-            border-bottom: 1px solid $border-common;
-
             &.attributes {
                 .attribute {
                     margin-bottom: 20px;
@@ -35,14 +31,20 @@
         .reviews {
             vertical-align: top;
 
+            .stars {
+                vertical-align: middle;
+                margin-bottom: -6px;
+            }
+
             > div {
                 display: inline-block;
+                vertical-align: middle;
             }
         }
 
         .info {
-            @extend .mb15;
             margin-left: 0px;
+            border-bottom: 1px solid #d3d3d3;
 
             > h2,
             div {
@@ -50,11 +52,11 @@
             }
 
             > * {
-                margin-bottom: 10px;
+                margin-bottom: 14px;
             }
 
             h2 {
-                @extend .fw7;
+                @extend .fw6;
                 @extend .fs24;
             }
 
@@ -68,12 +70,14 @@
             }
 
             .availability {
-                button {
+                label {
+                    width: max-content;
                     border: none;
                     color: white;
                     font-weight: 600;
                     cursor: default;
-                    padding: 2px 11px;
+                    margin: 0;
+                    padding: 1px 8px 3px 8px;
                     background: $button-danger;
 
                     &.active {
@@ -154,7 +158,7 @@
         }
 
         .product-price {
-            height: unset;
+            line-height: 38px;
 
             .price-from {
                 .bundle-regular-price {
@@ -261,6 +265,7 @@
                 height: 46px;
                 margin-left: 0;
                 padding-left: 10px;
+                float: right;
 
                 i {
                     display: table-cell;
@@ -278,22 +283,26 @@
         }
     }
 
-    .layouter,
-    #product-form {
+    .layouter {
         height: 100%;
     }
 
     #product-form {
+        height: 100%;
+
         .form-container {
             height: 100%;
             position: relative;
 
-            > .left {
+            div.left {
                 top: 60px;
                 padding: 0px;
                 position: sticky;
 
                 .product-image-group {
+                    position: sticky;
+                    top: 70px;
+
                     > div {
                         margin: 0;
                         padding: 0;
@@ -351,14 +360,6 @@
         }
     }
 
-    .accordian {
-        &.active {
-            .accordian-header {
-                padding-bottom: 0px;
-            }
-        }
-    }
-
     .description {
         overflow: auto;
         ul,
@@ -369,13 +370,11 @@
     }
 
     .accordian-content {
-        div {
-            overflow: auto;
-        }
+        font-weight: 400;
+        font-size: 16px;
     }
 
     .full-description {
-        font-size: 14px;
         ul,
         ol {
             margin: revert;
@@ -384,6 +383,8 @@
     }
 
     .full-specifications {
+        width: 100%;
+
         tr {
             td:first-child() {
                 width: 100px;
@@ -396,6 +397,11 @@
         border-color: $border-dark;
         background-color: $border-dark;
     }
+}
+
+.zoomContainer,
+.zoomLens {
+    z-index: 99 !important;
 }
 
 .store-meta-images {

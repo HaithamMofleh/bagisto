@@ -26,55 +26,6 @@ class Cart
     use CartCoupons, CartTools, CartValidators;
 
     /**
-     * Cart repository instance.
-     *
-     * @var \Webkul\Checkout\Repositories\CartRepository
-     */
-    protected $cartRepository;
-
-    /**
-     * Cart item repository instance.
-     *
-     * @var \Webkul\Checkout\Repositories\CartItemRepository
-     */
-    protected $cartItemRepository;
-
-    /**
-     * Cart address repository instance.
-     *
-     * @var \Webkul\Checkout\Repositories\CartAddressRepository
-     */
-    protected $cartAddressRepository;
-
-    /**
-     * Product repository instance.
-     *
-     * @var \Webkul\Checkout\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * Tax category repository instance.
-     *
-     * @var \Webkul\Tax\Repositories\TaxCategoryRepository
-     */
-    protected $taxCategoryRepository;
-
-    /**
-     * Wishlist repository instance.
-     *
-     * @var \Webkul\Customer\Repositories\WishlistRepository
-     */
-    protected $wishlistRepository;
-
-    /**
-     * Customer address repository instance.
-     *
-     * @var \Webkul\Customer\Repositories\CustomerAddressRepository
-     */
-    protected $customerAddressRepository;
-
-    /**
      * Create a new class instance.
      *
      * @param  \Webkul\Checkout\Repositories\CartRepository             $cartRepository
@@ -87,27 +38,15 @@ class Cart
      * @return void
      */
     public function __construct(
-        CartRepository $cartRepository,
-        CartItemRepository $cartItemRepository,
-        CartAddressRepository $cartAddressRepository,
-        ProductRepository $productRepository,
-        TaxCategoryRepository $taxCategoryRepository,
-        WishlistRepository $wishlistRepository,
-        CustomerAddressRepository $customerAddressRepository
-    ) {
-        $this->cartRepository = $cartRepository;
-
-        $this->cartItemRepository = $cartItemRepository;
-
-        $this->cartAddressRepository = $cartAddressRepository;
-
-        $this->productRepository = $productRepository;
-
-        $this->taxCategoryRepository = $taxCategoryRepository;
-
-        $this->wishlistRepository = $wishlistRepository;
-
-        $this->customerAddressRepository = $customerAddressRepository;
+        protected CartRepository $cartRepository,
+        protected CartItemRepository $cartItemRepository,
+        protected CartAddressRepository $cartAddressRepository,
+        protected ProductRepository $productRepository,
+        protected TaxCategoryRepository $taxCategoryRepository,
+        protected WishlistRepository $wishlistRepository,
+        protected CustomerAddressRepository $customerAddressRepository
+    )
+    {
     }
 
     /**
@@ -136,17 +75,18 @@ class Cart
     /**
      * Get cart item by product.
      *
-     * @param  array  $data
+     * @param  array|null  $data
+     * @param  array  $parentData
      * @return \Webkul\Checkout\Contracts\CartItem|void
      */
-    public function getItemByProduct($data)
+    public function getItemByProduct($data, $parentData = null)
     {
         $items = $this->getCart()->all_items;
 
         foreach ($items as $item) {
             if ($item->product->getTypeInstance()->compareOptions($item->additional, $data['additional'])) {
                 if (isset($data['additional']['parent_id'])) {
-                    if ($item->parent->product->getTypeInstance()->compareOptions($item->parent->additional, $data['additional'])) {
+                    if ($item->parent->product->getTypeInstance()->compareOptions($item->parent->additional, $parentData ?: request()->all())) {
                         return $item;
                     }
                 } else {
@@ -194,7 +134,7 @@ class Cart
             $parentCartItem = null;
 
             foreach ($cartProducts as $cartProduct) {
-                $cartItem = $this->getItemByProduct($cartProduct);
+                $cartItem = $this->getItemByProduct($cartProduct, $data);
 
                 if (isset($cartProduct['parent_id'])) {
                     $cartProduct['parent_id'] = $parentCartItem->id;
@@ -334,7 +274,7 @@ class Cart
         if ($cartItem = $cart->items()->find($itemId)) {
             $cartItem->delete();
 
-            if ($cart->items->count() == 0) {
+            if ($cart->items()->get()->count() == 0) {
                 $this->cartRepository->delete($cart->id);
 
                 if (session()->has('cart')) {
@@ -352,6 +292,30 @@ class Cart
         }
 
         return false;
+    }
+
+    /**
+     * Remove all items from cart.
+     *
+     * @return \Webkul\Checkout\Models\Cart|null
+     */
+    public function removeAllItems(): ?CartModel
+    {
+        $cart = $this->getCart();
+
+        Event::dispatch('checkout.cart.delete.all.before', $cart);
+
+        if (! $cart) {
+            return $cart;
+        }
+
+        foreach ($cart->items as $item) {
+            $this->removeItem($item->id);
+        }
+
+        Event::dispatch('checkout.cart.delete.all.after', $cart);
+
+        return $cart;
     }
 
     /**

@@ -7,10 +7,13 @@ import fa from 'vee-validate/dist/locale/fa';
 import fr from 'vee-validate/dist/locale/fr';
 import nl from 'vee-validate/dist/locale/nl';
 import tr from 'vee-validate/dist/locale/tr';
+import hi_IN from 'vee-validate/dist/locale/hi';
+import zh_CN from 'vee-validate/dist/locale/zh_CN';
 import axios from 'axios';
 import VueSlider from 'vue-slider-component';
 import accounting from 'accounting';
 import ImageSlider from './components/image-slider';
+import GoTop from '@inotom/vue-go-top';
 import 'lazysizes';
 
 window.jQuery = window.$ = $;
@@ -29,6 +32,8 @@ Vue.use(VeeValidate, {
 		fr: fr,
 		nl: nl,
 		tr: tr,
+        hi_IN: hi_IN,
+        zh_CN: zh_CN
     },
     events: 'input|change|blur',
 });
@@ -41,6 +46,7 @@ Vue.component('image-slider', ImageSlider);
 Vue.component('vue-slider', VueSlider);
 Vue.component('proceed-to-checkout', require('./components/checkout/proceed-to-checkout').default);
 Vue.component('wishlist-component-with-badge', require('./components/header-compare-with-badge').default);
+Vue.component('go-top', require('@inotom/vue-go-top').default);
 
 Vue.filter('currency', function (value, argument) {
     return accounting.formatMoney(value, argument);

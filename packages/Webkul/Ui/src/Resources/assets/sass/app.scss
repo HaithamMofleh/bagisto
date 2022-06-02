@@ -128,6 +128,10 @@
     margin-top: 90px;
 }
 
+.m-20 {
+    margin: 20px;
+}
+
 body {
     letter-spacing: -0.26px;
     line-height: 19px;
@@ -251,7 +255,7 @@ h5 {
     &[disabled='disabled']:hover,
     &[disabled='disabled']:active {
         cursor: not-allowed;
-        background: #b1b1ae;
+        background: #b1b1ae !important;
         box-shadow: none;
         opacity: 1;
     }
@@ -377,7 +381,7 @@ h5 {
                 }
 
                 a:hover {
-                    color: $brand-color;
+                    color: $brand-color !important;
                 }
 
                 .checkbox {
@@ -454,33 +458,35 @@ h5 {
             list-style-type: none;
             padding: 0px;
 
-            .read {
-                color: rgba(58, 58, 58, 0.5);
+            li {
+                border-bottom: 1px solid #c7c7c7;
+                padding: 0;
 
-                .notif-content > a {
-                    text-decoration: none;
-                    color: rgba(58, 58, 58, 0.5);
+                a {
+                    padding: 16px 10px;
 
+                    &:link,
+                    &:active,
+                    &:visited,
+                    &:focus {
+                        color: $font-color;
+                        display: block;
+                    }
+    
                     &:hover {
-                        color: rgba(58, 58, 58, 0.5);
+                        color: $brand-color;
                     }
                 }
-            }
 
-            li {
-                padding: 16px 10px;
-                border-bottom: 1px solid #c7c7c7;
-
-                a:link,
-                a:active,
-                a:visited,
-                a:focus {
-                    color: $font-color;
-                    display: block;
-                }
-
-                a:hover {
-                    color: $brand-color;
+                &.read {
+                    a {
+                        text-decoration: none;
+                        color: rgba(58, 58, 58, 0.5);
+    
+                        &:hover {
+                            color: rgba(58, 58, 58, 0.5);
+                        }
+                    }
                 }
 
                 .checkbox {
@@ -580,6 +586,10 @@ h5 {
             padding: 12px 10px;
             background: #f8f9fa;
             color: $font-color;
+
+            &.sortable {
+                cursor: pointer;
+            }
         }
 
         tbody td {
@@ -612,7 +622,6 @@ h5 {
     .control-group {
         width: 100%;
         margin-bottom: 0;
-        min-width: 140px;
 
         .control {
             width: 100%;
@@ -806,7 +815,8 @@ h5 {
             margin-left: -34px;
             pointer-events: none;
             position: absolute;
-            top: 51%;
+            top: 50%;
+            left: 70%;
         }
 
         .cross-icon {
@@ -857,6 +867,68 @@ h5 {
         .currency-code {
             vertical-align: middle;
             display: inline-block;
+        }
+    }
+
+    &.input-group {
+        margin-bottom: 0;
+    }
+
+    .input-group {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        width: 100%;
+
+        .input-group-append,
+        .input-group-prepend {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        > .control {
+            margin: 0;
+            position: relative;
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            width: 1% !important;
+
+            &:not(:first-child) {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            &:not(:last-child) {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        .input-group-prepend {
+            margin-right: -1px;
+
+            .control,
+            .btn {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        .input-group-append {
+            margin-left: -1px;
+
+            .control,
+            .btn {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
     }
 }
@@ -1197,10 +1269,14 @@ modal {
     overflow: hidden;
 }
 
+.loader-open {
+    overflow: hidden;
+}
+
 .modal-overlay {
     display: none;
     overflow-y: auto;
-    z-index: 10;
+    z-index: 1001;
     top: 0px;
     right: 0px;
     bottom: 0px;
@@ -1214,6 +1290,10 @@ modal {
     display: block;
 }
 
+.loader-open .loader-overlay {
+    display: block;
+}
+
 .modal-container {
     background: $white-color;
     top: 100px;
@@ -1222,7 +1302,7 @@ modal {
     left: 50%;
     margin-left: -300px;
     position: fixed;
-    z-index: 11;
+    z-index: 1002;
     @include box-shadow(
         0px 15px 25px 0px rgba(0, 0, 0, 0.03),
         0px 20px 45px 5px rgba(0, 0, 0, 0.2)
@@ -1350,7 +1430,7 @@ modal {
     margin-bottom: 20px;
     margin-top: 10px;
     display: inline-block;
-    width: 100%;
+    width: 200px;
 
     .image-item {
         width: 200px;
@@ -1365,6 +1445,10 @@ modal {
         background-position: center;
         margin-bottom: 20px;
         float: left;
+
+        &.draggable {
+            cursor: pointer;
+        }
 
         img.preview {
             width: 100%;
@@ -1419,7 +1503,7 @@ modal {
 
 .overlay-loader {
     position: fixed;
-    z-index: 11;
+    z-index: 10000;
     top: 50%;
     left: 50%;
     margin-top: -24px;

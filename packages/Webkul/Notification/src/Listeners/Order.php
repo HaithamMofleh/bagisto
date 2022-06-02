@@ -10,20 +10,12 @@ use Webkul\Notification\Events\UpdateOrderNotification;
 class Order
 {
     /**
-     * NotificationRepository
-     *
-     * @var object
-     */
-    protected $notificationRepository;
-
-    /**
-     * Create a new event instance.
+     * Create a new listener instance.
      *
      * @return void
      */
-    public function __construct(NotificationRepository $notificationRepository)
+    public function __construct(protected NotificationRepository $notificationRepository)
     {
-        $this->notificationRepository = $notificationRepository;
     }
 
     /**
@@ -33,7 +25,7 @@ class Order
      */
     public function createOrder($order)
     {
-        $this->notificationRepository->create(['type' => 'order','order_id' => $order->id]);
+        $this->notificationRepository->create(['type' => 'order', 'order_id' => $order->id]);
           
         event(new CreateOrderNotification);
     }
@@ -45,9 +37,9 @@ class Order
      */
     public function updateOrder($order)
     { 
-        $orderArray =[
-            'id' => $order->id,
-            'status' => $order->status
+        $orderArray = [
+            'id'     => $order->id,
+            'status' => $order->status,
         ];
 
         event(new UpdateOrderNotification($orderArray));

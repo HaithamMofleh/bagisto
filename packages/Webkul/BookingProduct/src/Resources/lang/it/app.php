@@ -21,6 +21,7 @@ return [
                 'same-slot-all-days' => 'Stesso Slot tutti i giorni',
                 'slot-has-quantity' => 'Slot ha quantità',
                 'slots' => 'Slot',
+                'no-slots-available' => 'No slots available',
                 'from' => 'Da',
                 'to' => 'A',
                 'qty' => 'Qtà',
@@ -66,11 +67,23 @@ return [
                 'close' => 'Chiuso',
                 'time-error' => 'The to time must be greater than the from time.'
             ]
+        ],
+
+        'sales' => [
+            'bookings' => [
+                'title' => 'Informazioni Prenotazione',
+            ]
+        ],
+
+        'datagrid' => [
+            'from' => 'Da',
+            'to' => 'A',
         ]
     ],
 
     'shop' => [
         'products' => [
+            'booking-information' => 'Informazioni sulla prenotazione',
             'location' => 'Location',
             'contact' => 'Contatto',
             'email' => 'Email',

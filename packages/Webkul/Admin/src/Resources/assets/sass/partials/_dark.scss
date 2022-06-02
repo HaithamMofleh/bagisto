@@ -43,7 +43,7 @@
         ul.menubar {
             li.menu-item {
 
-                >a {
+                > a {
                     padding: 5px 2px;
                     display: block;
                     color: $black;
@@ -302,6 +302,14 @@
             color: $font-color;
             border-top: solid 1px $border-color;
             border-bottom: solid 1px $border-color;
+
+            .accordian-up-icon {
+                background-image: url(../images/Accordion-Dark-Arrow-Up.svg);
+            }
+
+            .accordian-down-icon {
+                background-image: url(../images/Accordion-Dark-Arrow-Up.svg);
+            }
         }
     }
 
@@ -400,6 +408,13 @@
                     }
                 }
             }
+        }
+    }
+
+    .btn {
+        &.btn-primary {
+            background: $white;
+            color: $black;
         }
     }
 
@@ -754,12 +769,25 @@
     }
 
     .control-group input:checked+.slider {
-        background-color: $dark-mode-switch-background !important;
+        background-color: $dark-mode-left-menubar-active-background-color !important;
+    }
+}
+
+.navbar-left {
+    .menubar-bottom {
+        background-color: $dark-bg;
+
+        .accordian-left-icon {
+            background-image: url(../images/dark-chevron-left.svg);
+        }
+
+        .accordian-right-icon {
+            background-image: url(../images/dark-chevron-right.svg);
+        }
     }
 }
 
 .rtl.dark-mode {
-
     .navbar-left {
         background-color: $dark-bg;
         border-right: 1px solid $dark-bg;
@@ -767,7 +795,7 @@
         ul.menubar {
             li.menu-item {
 
-                >a {
+                > a {
                     padding: 5px 2px;
                     display: block;
                     color: $black;

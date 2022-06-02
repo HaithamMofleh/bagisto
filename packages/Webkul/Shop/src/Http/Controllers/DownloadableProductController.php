@@ -4,30 +4,18 @@ namespace Webkul\Shop\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Webkul\Sales\Repositories\DownloadableLinkPurchasedRepository;
+use Webkul\Shop\DataGrids\DownloadableProductDataGrid;
 
 class DownloadableProductController extends Controller
 {
-    /**
-     * DownloadableLinkPurchasedRepository object
-     *
-     * @var \Webkul\Sales\Repositories\DownloadableLinkPurchasedRepository
-     */
-    protected $downloadableLinkPurchasedRepository;
-
     /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Sales\Repositories\DownloadableLinkPurchasedRepository  $downloadableLinkPurchasedRepository
      * @return void
      */
-    public function __construct(
-        DownloadableLinkPurchasedRepository $downloadableLinkPurchasedRepository
-    )
+    public function __construct(protected DownloadableLinkPurchasedRepository $downloadableLinkPurchasedRepository)
     {
-        $this->middleware('customer');
-
-        $this->downloadableLinkPurchasedRepository = $downloadableLinkPurchasedRepository;
-
         parent::__construct();
     }
 
@@ -38,6 +26,10 @@ class DownloadableProductController extends Controller
     */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(DownloadableProductDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 

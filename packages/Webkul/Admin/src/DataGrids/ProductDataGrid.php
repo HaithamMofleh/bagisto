@@ -59,7 +59,8 @@ class ProductDataGrid extends DataGrid
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         /* locale */
         $this->locale = core()->getRequestedLocaleCode();
 
@@ -104,6 +105,7 @@ class ProductDataGrid extends DataGrid
                 'products.type as product_type',
                 'product_flat.status',
                 'product_flat.price',
+                'product_flat.url_key',
                 'attribute_families.name as attribute_family',
                 DB::raw('SUM(' . DB::getTablePrefix() . 'product_inventories.qty) as quantity')
             );
@@ -165,6 +167,13 @@ class ProductDataGrid extends DataGrid
             'searchable' => true,
             'sortable'   => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                if (! empty($row->url_key)) {
+                    return "<a href='" . route('shop.productOrCategory.index', $row->url_key) . "' target='_blank'>" . $row->product_name . "</a>";
+                }
+
+                return $row->product_name;
+            },
         ]);
 
         $this->addColumn([
@@ -193,11 +202,15 @@ class ProductDataGrid extends DataGrid
             'searchable' => false,
             'filterable' => true,
             'closure'    => function ($value) {
+                $html = '';
+
                 if ($value->status == 1) {
-                    return trans('admin::app.datagrid.active');
+                    $html .= '<span class="badge badge-md badge-success">' . trans('admin::app.datagrid.active') . '</span>';
                 } else {
-                    return trans('admin::app.datagrid.inactive');
+                    $html .= '<span class="badge badge-md badge-danger">' . trans('admin::app.datagrid.inactive') . '</span>';
                 }
+
+                return $html;
             },
         ]);
 
@@ -280,8 +293,8 @@ class ProductDataGrid extends DataGrid
             'action'  => route('admin.catalog.products.massupdate'),
             'method'  => 'POST',
             'options' => [
-                'Active'   => 1,
-                'Inactive' => 0,
+                trans('admin::app.datagrid.active')    => 1,
+                trans('admin::app.datagrid.inactive')  => 0,
             ],
         ]);
     }

@@ -18,20 +18,6 @@ class OrderController extends Controller
     protected $_config;
 
     /**
-     * OrderRepository object
-     *
-     * @var \Webkul\Sales\Repositories\OrderRepository
-     */
-    protected $orderRepository;
-
-    /**
-     * OrderCommentRepository object
-     *
-     * @var \Webkul\Sales\Repositories\OrderCommentRepository
-     */
-    protected $orderCommentRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Sales\Repositories\OrderRepository  $orderRepository
@@ -39,17 +25,11 @@ class OrderController extends Controller
      * @return void
      */
     public function __construct(
-        OrderRepository $orderRepository,
-        OrderCommentRepository $orderCommentRepository
+        protected OrderRepository $orderRepository,
+        protected OrderCommentRepository $orderCommentRepository
     )
     {
-        $this->middleware('admin');
-
         $this->_config = request('_config');
-
-        $this->orderRepository = $orderRepository;
-
-        $this->orderCommentRepository = $orderCommentRepository;
     }
 
     /**

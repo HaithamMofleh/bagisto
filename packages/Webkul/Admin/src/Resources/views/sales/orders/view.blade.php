@@ -61,7 +61,7 @@
                 <tab name="{{ __('admin::app.sales.orders.info') }}" :selected="true">
                     <div class="sale-container">
 
-                        <accordian :title="'{{ __('admin::app.sales.orders.order-and-account') }}'" :active="true">
+                        <accordian title="{{ __('admin::app.sales.orders.order-and-account') }}" :active="true">
                             <div slot="body">
 
                                 <div class="sale">
@@ -89,7 +89,7 @@
                                                 </span>
 
                                                 <span class="value">
-                                                    {{ $order->status_label }}
+                                                {{ __('admin::app.notification.order-status-messages.'.strtolower($order->status_label)) }}
                                                 </span>
                                             </div>
 
@@ -160,7 +160,7 @@
                         </accordian>
 
                         @if ($order->billing_address || $order->shipping_address)
-                            <accordian :title="'{{ __('admin::app.sales.orders.address') }}'" :active="true">
+                            <accordian title="{{ __('admin::app.sales.orders.address') }}" :active="true">
                                 <div slot="body">
                                     <div class="sale">
                                         @if($order->billing_address)
@@ -195,7 +195,7 @@
                             </accordian>
                         @endif
 
-                        <accordian :title="'{{ __('admin::app.sales.orders.payment-and-shipping') }}'" :active="true">
+                        <accordian title="{{ __('admin::app.sales.orders.payment-and-shipping') }}" :active="true">
                             <div slot="body">
 
                                 <div class="sale">
@@ -278,7 +278,7 @@
                             </div>
                         </accordian>
 
-                        <accordian :title="'{{ __('admin::app.sales.orders.products-ordered') }}'" :active="true">
+                        <accordian title="{{ __('admin::app.sales.orders.products-ordered') }}" :active="true">
                             <div slot="body">
                                 <div class="table">
                                     <div class="table-responsive">
@@ -499,7 +499,7 @@
                                         <td>#{{ $invoice->increment_id ?? $invoice->id }}</td>
                                         <td>{{ $invoice->created_at }}</td>
                                         <td>#{{ $invoice->order->increment_id }}</td>
-                                        <td>{{ $invoice->address->name }}</td>
+                                        <td>{{ $order->customer_full_name }}</td>
                                         <td>{{ $invoice->status_label }}</td>
                                         <td>{{ core()->formatBasePrice($invoice->base_grand_total) }}</td>
                                         <td class="action">

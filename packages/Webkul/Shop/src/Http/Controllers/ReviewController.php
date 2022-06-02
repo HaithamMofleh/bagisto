@@ -9,27 +9,6 @@ use Webkul\Product\Repositories\ProductReviewImageRepository;
 class ReviewController extends Controller
 {
     /**
-     * ProductRepository object
-     *
-     * @var \Webkul\Product\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * ProductReviewRepository object
-     *
-     * @var \Webkul\Product\Repositories\ProductReviewRepository
-     */
-    protected $productReviewRepository;
-
-    /**
-     * ProductReviewImageRepository object
-     *
-     * @var \Webkul\Product\Repositories\ProductReviewImageRepository
-     */
-    protected $productReviewImageRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Product\Repositories\ProductRepository  $productRepository
@@ -38,16 +17,11 @@ class ReviewController extends Controller
      * @return void
      */
     public function __construct(
-        ProductRepository $productRepository,
-        ProductReviewRepository $productReviewRepository,
-        ProductReviewImageRepository $productReviewImageRepository
-    ) {
-        $this->productRepository = $productRepository;
-
-        $this->productReviewRepository = $productReviewRepository;
-
-        $this->productReviewImageRepository = $productReviewImageRepository;
-
+        protected ProductRepository $productRepository,
+        protected ProductReviewRepository $productReviewRepository,
+        protected ProductReviewImageRepository $productReviewImageRepository
+    )
+    {
         parent::__construct();
     }
 
@@ -82,15 +56,18 @@ class ReviewController extends Controller
             'title'   => 'required',
         ]);
 
-        $data = request()->all();
+        $product = $this->productRepository->find($id);
+
+        $data = array_merge(request()->all(), [
+            'status'     => 'pending',
+            'product_id' => $id,
+        ]);
 
         if (auth()->guard('customer')->user()) {
             $data['customer_id'] = auth()->guard('customer')->user()->id;
+
             $data['name'] = auth()->guard('customer')->user()->first_name . ' ' . auth()->guard('customer')->user()->last_name;
         }
-
-        $data['status'] = 'pending';
-        $data['product_id'] = $id;
 
         $review = $this->productReviewRepository->create($data);
 
@@ -98,7 +75,7 @@ class ReviewController extends Controller
 
         session()->flash('success', trans('shop::app.response.submit-success', ['name' => 'Product Review']));
 
-        return redirect()->route($this->_config['redirect']);
+        return redirect()->route('shop.productOrCategory.index', $product->url_key);
     }
 
     /**
@@ -147,10 +124,8 @@ class ReviewController extends Controller
     {
         $reviews = auth()->guard('customer')->user()->all_reviews;
 
-        if ($reviews->count() > 0) {
-            foreach ($reviews as $review) {
-                $this->productReviewRepository->delete($review->id);
-            }
+        foreach ($reviews as $review) {
+            $this->productReviewRepository->delete($review->id);
         }
 
         session()->flash('success', trans('shop::app.reviews.delete-all'));

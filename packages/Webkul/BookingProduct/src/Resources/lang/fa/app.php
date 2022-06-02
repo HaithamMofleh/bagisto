@@ -66,11 +66,23 @@ return [
                 'close' => 'بستن',
                 'time-error' => 'The to time must be greater than the from time.'
             ]
+        ],
+
+        'sales' => [
+            'bookings' => [
+                'title' => 'اطلاعات رزرو',
+            ]
+        ],
+
+        'datagrid' => [
+            'from' => 'از جانب',
+            'to' => 'به',
         ]
     ],
 
     'shop' => [
         'products' => [
+            'booking-information' => 'اطلاعات مربوط به رزرو',
             'location' => 'مکان',
             'contact' => 'مخاطب',
             'email' => 'پست الکترونیک',
@@ -89,6 +101,7 @@ return [
             'book-an-appointment' => 'قرار ملاقات را رزرو کنید',
             'date' => 'تاریخ',
             'slot' => 'اسلات',
+            'no-slots-available' => 'No slots available',
             'rent-an-item' => 'اجاره یک مورد',
             'choose-rent-option' => 'گزینه اجاره را انتخاب کنید',
             'daily-basis' => 'به صورت روزانه',

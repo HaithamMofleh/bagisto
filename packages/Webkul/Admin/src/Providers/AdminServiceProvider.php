@@ -28,8 +28,6 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->registerACL();
 
-        $router->aliasMiddleware('admin_locale', Locale::class);
-
         $this->app->register(EventServiceProvider::class);
     }
 
@@ -73,7 +71,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function loadPublishers(): void
     {
-        $this->publishes([__DIR__ . '/../Resources/lang' => resource_path('lang/vendor/admin')]);
+        $this->publishes([__DIR__ . '/../Resources/lang' => lang_path('vendor/admin')]);
 
         $this->publishes([__DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/admin/assets')], 'public');
     }

@@ -77,6 +77,8 @@ return [
         'email-marketing'          => 'Email Marketing',
         'campaigns'                => 'Campaigns',
         'email-templates'          => 'Email Templates',
+        'events'                   => 'Events',
+        'sitemaps'                 => 'Sitemaps',
         'tax-categories'           => 'Steuer-Kategorien',
         'tax-rates'                => 'Steuersätze',
         'discount'                 => 'Rabatt',
@@ -129,6 +131,13 @@ return [
         'promotions'               => 'Promotions',
         'cart-rules'               => 'Warenkorbregeln',
         'catalog-rules'            => 'Katalogregeln',
+        'email-marketing'          => 'Email Marketing',
+        'email-templates'          => 'Email Templates',
+        'campaigns'                => 'Campaigns',
+        'subscribers'              => 'Newsletter Subscribers',
+        'events'                   => 'Events',
+        'sitemaps'                 => 'Sitemaps',
+        'newsletter-subscriptions' => 'Newsletter Subscriptions',
     ],
     'dashboard'     =>
     [
@@ -247,18 +256,24 @@ return [
         'update-status'    => 'Update-Status',
         'transaction-id'   => 'Transaction Id',
         'transaction-date' => 'Transaction Date',
+        'file-name'        => 'File Name',
+        'path'             => 'Path',
+        'link-for-google'  => 'Link For Google',
     ],
     'account'       =>
     [
-        'title'            => 'Mein Konto',
-        'save-btn-title'   => 'Speichern',
-        'general'          => 'Allgemein',
-        'name'             => 'Name',
-        'email'            => 'E-Mail',
-        'password'         => 'Passwort',
-        'confirm-password' => 'Passwort bestätigen',
-        'change-password'  => 'Änderung des Account-Passworts',
-        'current-password' => 'Aktuelles Passwort',
+        'title'                => 'Mein Konto',
+        'save-btn-title'       => 'Speichern',
+        'general'              => 'Allgemein',
+        'upload-image-info'    => 'Upload a Profile Image (100px x 100px) in PNG or JPG Format',
+        'remove-image'         => 'Remove Image',
+        'image-upload-message' => 'Only images (.jpeg, .jpg, .png, ..) are allowed.',
+        'name'                 => 'Name',
+        'email'                => 'E-Mail',
+        'password'             => 'Passwort',
+        'confirm-password'     => 'Passwort bestätigen',
+        'change-password'      => 'Änderung des Account-Passworts',
+        'current-password'     => 'Aktuelles Passwort',
     ],
     'users'         =>
     [
@@ -271,6 +286,9 @@ return [
             'confirm-password' => 'Passwort bestätigen',
             'back-link-title'  => 'Zurück zur Anmeldung',
             'submit-btn-title' => 'E-Mail zum Zurücksetzen des Passworts senden',
+            'passwords'        => [
+                'throttled' => 'Warnung: Sie haben das Zurücksetzen des Passworts kürzlich angefordert, bitte überprüfen Sie Ihre E-Mails.',
+            ],
         ],
         'reset-password'  =>
         [
@@ -333,7 +351,7 @@ return [
     ],
     'sales'         =>
     [
-        'orders'        =>
+        'orders'    =>
         [
             'title'                        => 'Bestellungen',
             'view-title'                   => 'Bestellung #:order_id',
@@ -397,7 +415,7 @@ return [
             'refunds'                      => 'Erstattungen',
             'transactions'                 => 'Transactions',
         ],
-        'invoices'      =>
+        'invoices'  =>
         [
             'title'                  => 'Rechnungen',
             'id'                     => 'Id',
@@ -428,7 +446,7 @@ return [
             'status-pending'         => 'Pending Payment',
             'status-paid'            => 'Paid',
         ],
-        'shipments'     =>
+        'shipments' =>
         [
             'title'             => 'Sendungen',
             'id'                => 'Id',
@@ -454,7 +472,7 @@ return [
             'order-error'       => 'Die Erstellung von Auftragssendungen ist nicht zulässig.',
             'quantity-invalid'  => 'Die angeforderte Menge ist ungültig oder nicht verfügbar.',
         ],
-        'refunds'       =>
+        'refunds'   =>
         [
             'title'                       => 'Erstattungen',
             'id'                          => 'Id',
@@ -479,48 +497,49 @@ return [
         ],
 
         'transactions' => [
-            'title'               => 'Transactions',
-            'create-title'        => 'Add transaction',
+            'title'               => 'Transaktionen',
+            'create-title'        => 'Transaktion hinzufügen',
             'id'                  => 'Id',
-            'transaction-id'      => 'Transaction Id',
-            'payment-method'      => 'Payment method',
-            'transaction-amount'  => 'Transaction amount',
-            'action'              => 'Action',
-            'view-title'          => 'Transaction #:transaction_id',
-            'transaction-data'    => 'Transaction Data',
-            'order-id'            => 'Order Id',
-            'invoice-id'          => 'Invoice Id',
+            'transaction-id'      => 'Transaktions-ID',
+            'payment-method'      => 'Bezahlverfahren',
+            'transaction-amount'  => 'Transaktionshöhe',
+            'action'              => 'Handlung',
+            'view-title'          => 'Transaktion #:transaction_id',
+            'transaction-data'    => 'Transaktionsdaten',
+            'order-id'            => 'Auftragsnummer',
+            'invoice-id'          => 'Rechnungs-ID',
             'status'              => 'Status',
-            'created-at'          => 'Created At',
-            'transaction-details' => 'Transaction Details',
+            'created-at'          => 'Hergestellt in',
+            'transaction-details' => 'Transaktionsdetails',
             'response'            => [
-                'invoice-missing'   => 'This invoice id does not exist',
-                'transaction-saved' => 'The transaction has been saved',
-                'already-paid'      => 'This invoice has already been paid',
+                'invoice-missing'   => 'Diese Rechnungs-ID existiert nicht',
+                'transaction-saved' => 'Die Transaktion wurde gespeichert',
+                'already-paid'      => 'Diese Rechnung wurde bereits bezahlt',
+                'transaction-amount-exceeds' => 'Der angegebene Betrag dieser Transaktion übersteigt den Gesamtbetrag der Rechnung.',
             ],
         ],
     ],
-    'catalog'       =>
+    'catalog'   =>
     [
-        'products'   =>
+        'products'      =>
         [
-            'title'                         => 'Produkte',
-            'add-product-btn-title'         => 'Produkt hinzufügen',
-            'add-title'                     => 'Produkt hinzufügen',
-            'edit-title'                    => 'Produkt bearbeiten',
-            'save-btn-title'                => 'Produkt speichern',
-            'general'                       => 'Allgemein',
-            'product-type'                  => 'Produkttyp',
-            'type'                          => [
+            'title'                 => 'Produkte',
+            'add-product-btn-title' => 'Produkt hinzufügen',
+            'add-title'             => 'Produkt hinzufügen',
+            'edit-title'            => 'Produkt bearbeiten',
+            'save-btn-title'        => 'Produkt speichern',
+            'general'               => 'Allgemein',
+            'product-type'          => 'Produkttyp',
+            'type'                  => [
                 'simple'                        => 'eenvoudig',
                 'booking'                       => 'boeken',
                 'bundle'                        => 'bundel',
                 'downloadable'                  => 'downloadbaar',
                 'grouped'                       => 'gegroepeerd',
-                'virtual'                       => 'virtueel',            
+                'virtual'                       => 'virtueel',
                 'configurable'                  => 'configureerbaar',
 
-            ], 
+            ],
             'simple'                        => 'Einfach',
             'configurable'                  => 'Konfigurierbar',
             'familiy'                       => 'Attributgruppe',
@@ -590,8 +609,13 @@ return [
             'save'                          => 'Save',
             'cancel'                        => 'Cancel',
             'saved-inventory-message'       => 'Product inventory saved successfully.',
+            'validations'                   => [
+                'quantity-required' => 'Quantity is required.',
+                'quantity-integer'  => 'Quantity should be integer.',
+                'quantity-min-zero' => 'Quantity should be greater then zero.',
+            ],
         ],
-        'attributes' =>
+        'attributes'            =>
         [
             'title'                       => 'Attribute',
             'add-title'                   => 'Attribut hinzufügen',
@@ -602,6 +626,7 @@ return [
             'type'                        => 'Attribut-Typ',
             'text'                        => 'Text',
             'textarea'                    => 'Textarea',
+            'enable-wysiwyg'              => 'Enable Wysiwyg Editor',
             'price'                       => 'Preis',
             'boolean'                     => 'Boolean',
             'select'                      => 'Select',
@@ -648,7 +673,7 @@ return [
                 'max-size' => 'The image size must be less than 600 KB',
             ],
         ],
-        'families'   =>
+        'families'              =>
         [
             'title'                => 'Familien',
             'add-family-btn-title' => 'Familie hinzufügen',
@@ -660,6 +685,8 @@ return [
             'name'                 => 'Name',
             'groups'               => 'Gruppen',
             'add-group-title'      => 'Gruppe hinzufügen',
+            'edit-group-title'     => 'Edit Group',
+            'update-group-title'   => 'Update Group',
             'position'             => 'Position',
             'attribute-code'       => 'Code',
             'type'                 => 'Typ',
@@ -667,7 +694,7 @@ return [
             'search'               => 'Suche',
             'group-exist-error'    => 'Eine gleichnamige Gruppe existiert bereits.',
         ],
-        'categories' =>
+        'categories'            =>
         [
             'title'                    => 'Kategorien',
             'add-title'                => 'Kategorie hinzufügen',
@@ -687,6 +714,7 @@ return [
             'description'              => 'Beschreibung',
             'parent-category'          => 'Übergeordnete Kategorie',
             'seo'                      => 'Suchmaschinen-Optimierung',
+            'products'                 => 'Produkte',
             'slug'                     => 'Slug',
             'meta_title'               => 'Meta Titel',
             'meta_description'         => 'Meta-Beschreibung',
@@ -1264,6 +1292,21 @@ return [
             'update-success' => 'Event updated successfully.',
             'delete-success' => 'Event deleted successfully.',
             'edit-error'     => 'Can not edit this event.',
+        ],
+
+        'sitemaps' => [
+            'title'          => 'Sitemaps',
+            'add-title'      => 'Add Sitemap',
+            'edit-title'     => 'Edit Sitemap',
+            'save-btn-title' => 'Save',
+            'general'        => 'General',
+            'file-name'      => 'File Name',
+            'file-name-info' => 'Example: sitemap.xml',
+            'path'           => 'Path',
+            'path-info'      => 'Example: "/sitemap/" or "/" for base path',
+            'create-success' => 'Sitemap created successfully.',
+            'update-success' => 'Sitemap updated successfully.',
+            'delete-success' => 'Sitemap deleted successfully.',
         ],
     ],
 

@@ -1,6 +1,6 @@
 {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.downloadable.before', ['product' => $product]) !!}
 
-<accordian :title="'{{ __('admin::app.catalog.products.downloadable') }}'" :active="true">
+<accordian title="{{ __('admin::app.catalog.products.downloadable') }}" :active="true">
     <div slot="body">
         {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.downloadable.links.controls.before', ['product' => $product]) !!}
 
@@ -36,7 +36,7 @@
 
 @push('scripts')
     <script type="text/x-template" id="downloadable-link-list-template">
-        <div class="table" style="overflow-x: unset;">
+        <div class="table" style="overflow-x: auto;">
             <table style="margin-bottom: 20px;">
                 <thead>
                     <tr>
@@ -175,7 +175,7 @@
     </script>
 
     <script type="text/x-template" id="downloadable-sample-list-template">
-        <div class="table" style="overflow-x: unset;">
+        <div class="table" style="overflow-x: auto;">
             <table style="margin-bottom: 20px;">
                 <thead>
                     <tr>

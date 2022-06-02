@@ -66,11 +66,23 @@ return [
                 'close' => 'Dichtbij',
                 'time-error' => 'The to time must be greater than the from time.'
             ]
+        ],
+
+        'sales' => [
+            'bookings' => [
+                'title' => 'Boekingsinformatie',
+            ]
+        ],
+
+        'datagrid' => [
+            'from' => 'Van',
+            'to' => 'To',
         ]
     ],
 
     'shop' => [
         'products' => [
+            'booking-information' => 'Boekingsinformatie',
             'location' => 'Plaats',
             'contact' => 'Contact',
             'email' => 'Email',
@@ -89,6 +101,7 @@ return [
             'book-an-appointment' => 'Een afspraak maken',
             'date' => 'Datum',
             'slot' => 'Sleuf',
+            'no-slots-available' => 'No slots available',
             'rent-an-item' => 'Huur een item',
             'choose-rent-option' => 'Kies Huuroptie',
             'daily-basis' => 'Dagelijks',

@@ -66,11 +66,23 @@ return [
                 'close' => 'Cerrado',
                 'time-error' => 'The to time must be greater than the from time.'
             ]
+        ],
+
+        'sales' => [
+            'bookings' => [
+                'title' => 'Información sobre Reservas',
+            ]
+        ],
+
+        'datagrid' => [
+            'from' => 'Desde',
+            'to' => 'A',
         ]
     ],
 
     'shop' => [
         'products' => [
+            'booking-information' => 'Información de reserva',
             'location' => 'Ubicación',
             'contact' => 'Contacto',
             'email' => 'Correo Electrónico',
@@ -89,6 +101,7 @@ return [
             'book-an-appointment' => 'Reservar una Cita',
             'date' => 'Fecha',
             'slot' => 'Horario',
+            'no-slots-available' => 'No slots available',
             'rent-an-item' => 'Alquilar un Artículo',
             'choose-rent-option' => 'Elija la Opción de Alquiler',
             'daily-basis' => 'Diariamente',

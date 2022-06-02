@@ -3,6 +3,7 @@
 namespace Webkul\Category\Http\Controllers;
 
 use Webkul\Admin\DataGrids\CategoryDataGrid;
+use Webkul\Admin\DataGrids\CategoryProductDataGrid;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Category\Http\Requests\CategoryRequest;
 use Webkul\Category\Repositories\CategoryRepository;
@@ -18,20 +19,6 @@ class CategoryController extends Controller
     protected $_config;
 
     /**
-     * Category repository instance.
-     *
-     * @var \Webkul\Category\Repositories\CategoryRepository
-     */
-    protected $categoryRepository;
-
-    /**
-     * Attribute repository instance.
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Category\Repositories\CategoryRepository  $categoryRepository
@@ -39,13 +26,10 @@ class CategoryController extends Controller
      * @return void
      */
     public function __construct(
-        CategoryRepository $categoryRepository,
-        AttributeRepository $attributeRepository
-    ) {
-        $this->categoryRepository = $categoryRepository;
-
-        $this->attributeRepository = $attributeRepository;
-
+        protected CategoryRepository $categoryRepository,
+        protected AttributeRepository $attributeRepository
+    )
+    {
         $this->_config = request('_config');
     }
 
@@ -107,6 +91,19 @@ class CategoryController extends Controller
         $attributes = $this->attributeRepository->findWhere(['is_filterable' => 1]);
 
         return view($this->_config['view'], compact('category', 'categories', 'attributes'));
+    }
+
+    /**
+     * Show the products of specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function products($id)
+    {
+        if (request()->ajax()) {
+            return app(CategoryProductDataGrid::class)->toJson();
+        }
     }
 
     /**

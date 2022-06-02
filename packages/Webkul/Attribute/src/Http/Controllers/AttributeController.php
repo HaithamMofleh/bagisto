@@ -15,22 +15,13 @@ class AttributeController extends Controller
     protected $_config;
 
     /**
-     * Attribute repository instance.
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
      * @return void
      */
-    public function __construct(AttributeRepository $attributeRepository)
+    public function __construct(protected AttributeRepository $attributeRepository)
     {
-        $this->attributeRepository = $attributeRepository;
-
         $this->_config = request('_config');
     }
 
@@ -66,7 +57,7 @@ class AttributeController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'code'       => ['required', 'unique:attributes,code', new \Webkul\Core\Contracts\Validations\Code],
+            'code'       => ['required', 'not_in:type,attribute_family_id', 'unique:attributes,code', new \Webkul\Core\Contracts\Validations\Code],
             'admin_name' => 'required',
             'type'       => 'required',
         ]);

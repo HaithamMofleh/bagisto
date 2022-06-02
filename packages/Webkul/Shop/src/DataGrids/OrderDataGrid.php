@@ -75,7 +75,16 @@ class OrderDataGrid extends DataGrid
         $this->addColumn([
             'index'      => 'status',
             'label'      => trans('shop::app.customer.account.order.index.status'),
-            'type'       => 'string',
+            'type'       => 'checkbox',
+            'options'    => [
+                'processing'      => trans('shop::app.customer.account.order.index.processing'),
+                'completed'       => trans('shop::app.customer.account.order.index.completed'),
+                'canceled'        => trans('shop::app.customer.account.order.index.canceled'),
+                'closed'          => trans('shop::app.customer.account.order.index.closed'),
+                'pending'         => trans('shop::app.customer.account.order.index.pending'),
+                'pending_payment' => trans('shop::app.customer.account.order.index.pending-payment'),
+                'fraud'           => trans('shop::app.customer.account.order.index.fraud'),
+            ],
             'searchable' => false,
             'sortable'   => true,
             'closure'    => function ($value) {

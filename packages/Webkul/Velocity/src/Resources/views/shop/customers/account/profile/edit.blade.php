@@ -113,7 +113,7 @@
                         <input
                             type="date"
                             name="date_of_birth"
-                            placeholder="dd/mm/yyyy"
+                            placeholder="yyyy/mm/dd"
                             value="{{ old('date_of_birth') ?? $customer->date_of_birth }}"
                             v-validate="" data-vv-as="&quot;{{ __('shop::app.customer.account.profile.dob') }}&quot;" />
                     </date>
@@ -191,7 +191,7 @@
                         name="password"
                         ref="password"
                         type="password"
-                        v-validate="'min:6|max:18'" />
+                        v-validate="'min:6'" />
 
                     <span class="control-error" v-if="errors.has('password')" v-text="errors.first('password')"></span>
                 </div>

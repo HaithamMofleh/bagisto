@@ -14,35 +14,18 @@ class ConfigurationController extends Controller
     use Sanitizer;
 
     /**
-     * Velocity helper instance.
-     *
-     * @var \Webkul\Velocity\Helpers\Helper
-     */
-    protected $velocityHelper;
-
-    /**
-     * Velocity meta data repository intance.
-     *
-     * @var \Webkul\Velocity\Repositories\VelocityMetadataRepository
-     */
-    protected $velocityMetaDataRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Velocity\Repositories\MetadataRepository  $velocityMetaDataRepository
+     * @param  \Webkul\Velocity\Helpers\Helper  $velocityHelper
+     * @param  \Webkul\Velocity\Repositories\MetadataRepository  $velocityMetadataRepository
      * @return void
      */
     public function __construct (
-        Helper $velocityHelper,
-        VelocityMetadataRepository $velocityMetadataRepository
+        protected Helper $velocityHelper,
+        protected VelocityMetadataRepository $velocityMetadataRepository
     )
     {
         $this->_config = request('_config');
-
-        $this->velocityHelper = $velocityHelper;
-
-        $this->velocityMetaDataRepository = $velocityMetadataRepository;
     }
 
     /**
@@ -92,7 +75,7 @@ class ConfigurationController extends Controller
             ];
         }
 
-        $velocityMetaData = $this->velocityMetaDataRepository->findOneWhere([
+        $velocityMetaData = $this->velocityMetadataRepository->findOneWhere([
             'id' => $id,
         ]);
 
@@ -125,7 +108,7 @@ class ConfigurationController extends Controller
         $params['locale'] = $locale;
 
         /* update row */
-        $this->velocityMetaDataRepository->update($params, $id);
+        $this->velocityMetadataRepository->update($params, $id);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => trans('velocity::app.admin.meta-data.title')]));
 
@@ -217,9 +200,9 @@ class ConfigurationController extends Controller
                                         $saveImage[$subIndex] = $copyAdImage;
                                     }
                                     break;
-                                
+
                                 default:
-                                    
+
                                     break;
                             }
                         } elseif ( $index == 3 ) {
@@ -244,7 +227,7 @@ class ConfigurationController extends Controller
                                     break;
 
                                 default:
-                                    
+
                                     break;
                             }
                         } elseif ( $index == 2 ) {
@@ -263,7 +246,7 @@ class ConfigurationController extends Controller
                                     break;
 
                                 default:
-                                    
+
                                     break;
                             }
                         }
@@ -282,7 +265,7 @@ class ConfigurationController extends Controller
     }
 
     /**
-     * Copy the default adversise images 
+     * Copy the default adversise images
      *
      * @param  string  $resourceImagePath
      * @param  string  $copiedPath
@@ -341,7 +324,7 @@ class ConfigurationController extends Controller
      */
     private function createMetaData($locale, $channel)
     {
-        $this->velocityMetaDataRepository->create([
+        $this->velocityMetadataRepository->create([
             'locale'                   => $locale,
             'channel'                  => $channel,
             'header_content_count'     => '5',
@@ -349,7 +332,7 @@ class ConfigurationController extends Controller
             'footer_left_content'      => __('velocity::app.admin.meta-data.footer-left-raw-content'),
             'footer_middle_content'    => '<div class="col-lg-6 col-md-12 col-sm-12 no-padding"><ul type="none"><li><a href="{!! url(\'page/about-us\') !!}">About Us</a></li><li><a href="{!! url(\'page/cutomer-service\') !!}">Customer Service</a></li><li><a href="{!! url(\'page/whats-new\') !!}">What&rsquo;s New</a></li><li><a href="{!! url(\'page/contact-us\') !!}">Contact Us </a></li></ul></div><div class="col-lg-6 col-md-12 col-sm-12 no-padding"><ul type="none"><li><a href="{!! url(\'page/return-policy\') !!}"> Order and Returns </a></li><li><a href="{!! url(\'page/payment-policy\') !!}"> Payment Policy </a></li><li><a href="{!! url(\'page/shipping-policy\') !!}"> Shipping Policy</a></li><li><a href="{!! url(\'page/privacy-policy\') !!}"> Privacy and Cookies Policy </a></li></ul></div>',
             'slider'                   => 1,
-            'subscription_bar_content' => '<div class="social-icons col-lg-6"><a href="https://webkul.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-facebook" title="facebook"></i> </a> <a href="https://webkul.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-twitter" title="twitter"></i> </a> <a href="https://webkul.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-linked-in" title="linkedin"></i> </a> <a href="https://webkul.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-pintrest" title="Pinterest"></i> </a> <a href="https://webkul.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-youtube" title="Youtube"></i> </a> <a href="https://webkul.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-instagram" title="instagram"></i></a></div>',
+            'subscription_bar_content' => '<div class="social-icons col-lg-6"><a href="https://facebook.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-facebook" title="facebook"></i> </a> <a href="https://twitter.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-twitter" title="twitter"></i> </a> <a href="https://linkedin.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-linked-in" title="linkedin"></i> </a> <a href="https://pintrest.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-pintrest" title="Pinterest"></i> </a> <a href="https://youtube.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-youtube" title="Youtube"></i> </a> <a href="https://instagram.com" target="_blank" class="unset" rel="noopener noreferrer"><i class="fs24 within-circle rango-instagram" title="instagram"></i></a></div>',
             'product_policy'           => '<div class="row col-12 remove-padding-margin"><div class="col-lg-4 col-sm-12 product-policy-wrapper"><div class="card"><div class="policy"><div class="left"><i class="rango-van-ship fs40"></i></div> <div class="right"><span class="font-setting fs20">Free Shipping on Order $20 or More</span></div></div></div></div> <div class="col-lg-4 col-sm-12 product-policy-wrapper"><div class="card"><div class="policy"><div class="left"><i class="rango-exchnage fs40"></i></div> <div class="right"><span class="font-setting fs20">Product Replace &amp; Return Available </span></div></div></div></div> <div class="col-lg-4 col-sm-12 product-policy-wrapper"><div class="card"><div class="policy"><div class="left"><i class="rango-exchnage fs40"></i></div> <div class="right"><span class="font-setting fs20">Product Exchange and EMI Available </span></div></div></div></div></div>',
         ]);
     }

@@ -5,31 +5,11 @@ namespace Webkul\Shop\Http\Controllers;
 use Webkul\Core\Traits\PDFHandler;
 use Webkul\Sales\Repositories\InvoiceRepository;
 use Webkul\Sales\Repositories\OrderRepository;
+use Webkul\Shop\DataGrids\OrderDataGrid;
 
 class OrderController extends Controller
 {
     use PDFHandler;
-
-    /**
-     * Current customer.
-     *
-     * @var \Webkul\Customer\Contracts\Customer
-     */
-    protected $currentCustomer;
-
-    /**
-     * OrderrRepository object
-     *
-     * @var \Webkul\Sales\Repositories\OrderRepository
-     */
-    protected $orderRepository;
-
-    /**
-     * InvoiceRepository object
-     *
-     * @var \Webkul\Sales\Repositories\InvoiceRepository
-     */
-    protected $invoiceRepository;
 
     /**
      * Create a new controller instance.
@@ -39,16 +19,11 @@ class OrderController extends Controller
      * @return void
      */
     public function __construct(
-        OrderRepository $orderRepository,
-        InvoiceRepository $invoiceRepository
-    ) {
-        $this->middleware('customer');
-
+        protected OrderRepository $orderRepository,
+        protected InvoiceRepository $invoiceRepository
+    )
+    {
         $this->currentCustomer = auth()->guard('customer')->user();
-
-        $this->orderRepository = $orderRepository;
-
-        $this->invoiceRepository = $invoiceRepository;
 
         parent::__construct();
     }
@@ -60,6 +35,10 @@ class OrderController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(OrderDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 

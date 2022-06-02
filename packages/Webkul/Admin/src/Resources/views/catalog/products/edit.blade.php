@@ -93,7 +93,7 @@
 
                         {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.' . $attributeGroup->name . '.before', ['product' => $product]) !!}
 
-                        <accordian :title="'{{ __($attributeGroup->name) }}'"
+                        <accordian title="{{ __($attributeGroup->name) }}"
                                    :active="{{$index == 0 ? 'true' : 'false'}}">
                             <div slot="body">
                                 {!! view_render_event('bagisto.admin.catalog.product.edit_form_accordian.' . $attributeGroup->name . '.controls.before', ['product' => $product]) !!}
@@ -132,7 +132,7 @@
 
                                     @if (view()->exists($typeView = 'admin::catalog.products.field-types.' . $attribute->type))
 
-                                        <div class="control-group {{ $attribute->type }}"
+                                        <div class="control-group {{ $attribute->type }} {{ $attribute->enable_wysiwyg ? 'have-wysiwyg' : '' }}"
                                              @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $attribute->code }}[]') ? 'has-error' : '']"
                                              @else :class="[errors.has('{{ $attribute->code }}') ? 'has-error' : '']" @endif>
 
@@ -236,7 +236,7 @@
             });
 
             tinyMCEHelper.initTinyMCE({
-                selector: 'textarea#description, textarea#short_description',
+                selector: 'textarea.enable-wysiwyg, textarea.enable-wysiwyg',
                 height: 200,
                 width: "100%",
                 plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',

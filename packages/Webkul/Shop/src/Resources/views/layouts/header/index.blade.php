@@ -61,7 +61,7 @@
                     $showCompare = core()->getConfigData('general.content.shop.compare_option') == "1" ? true : false
                 @endphp
 
-               @php
+                @php
                     $showWishlist = core()->getConfigData('general.content.shop.wishlist_option') == "1" ? true : false;
                 @endphp
 
@@ -118,7 +118,7 @@
                                     <span style="font-size: 12px;">{{ __('shop::app.header.dropdown-text') }}</span>
                                 </div>
 
-                                <div style="margin-top: 15px;">
+                                <div class="button-group">
                                     <a class="btn btn-primary btn-md" href="{{ route('customer.session.index') }}" style="color: #ffffff">
                                         {{ __('shop::app.header.sign-in') }}
                                     </a>
@@ -128,14 +128,28 @@
                                     </a>
                                 </div>
                             </li>
+
+                            <hr>
+
+                            @if ($showWishlist)
+                                <li>
+                                    <a href="{{ route('customer.wishlist.index') }}">
+                                        {{ __('shop::app.header.wishlist') }}
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if ($showCompare)
+                                <li>
+                                    <a href="{{ route('velocity.product.compare') }}">
+                                        {{ __('shop::app.customer.compare.text') }}
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     @endguest
 
                     @auth('customer')
-                        @php
-                           $showWishlist = core()->getConfigData('general.content.shop.wishlist_option') == "1" ? true : false;
-                        @endphp
-
                         <ul class="dropdown-list account customer">
                             <li>
                                 <div>
@@ -151,24 +165,18 @@
 
                                     @if ($showWishlist)
                                         <li>
-                                            <a href="{{ route('customer.wishlist.index') }}">{{ __('shop::app.header.wishlist') }}</a>
+                                            <a href="{{ route('customer.wishlist.index') }}">
+                                                {{ __('shop::app.header.wishlist') }}
+                                            </a>
                                         </li>
                                     @endif
 
-                                    @if ($showCompare)                                     
-                                    <li>
-                                        <a
-                                            @auth('customer')
-                                                href="{{ route('velocity.customer.product.compare') }}"
-                                            @endauth
-
-                                            @guest('customer')
-                                                href="{{ route('velocity.product.compare') }}"
-                                            @endguest
-                                            
-                                            > {{ __('shop::app.customer.compare.text') }}
-                                        </a>
-                                    </li>
+                                    @if ($showCompare)
+                                        <li>
+                                            <a href="{{ route('velocity.customer.product.compare') }}">
+                                                {{ __('shop::app.customer.compare.text') }}
+                                            </a>
+                                        </li>
                                     @endif
 
                                     <li>
